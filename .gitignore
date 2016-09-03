@@ -1,0 +1,31 @@
+# Project
+.project
+.settings
+.vscode
+
+# Dependencies
+node_modules/
+
+# Coverage Reports
+reports/
+
+
+# mac crap
+.DS_Store
+
+# Optional npm cache directory
+.npm
+
+# Optional REPL history
+.node_repl_history
+
+# Logs
+logs
+
+*.log
+npm-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed

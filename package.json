@@ -1,0 +1,22 @@
+{
+  "name": "tourney-at-harrenhal",
+  "version": "1.0.0",
+  "description": "A tournament bracket app",
+  "main": "index.js",
+  "scripts": {
+    "test": "jasmine",
+    "test-with-coverage": "istanbul cover jasmine"
+  },
+  "author": "pinbar",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.13.4",
+    "istanbul": "^0.4.4",
+    "jasmine": "2.4.1",
+    "jasmine-reporters": "^2.2.0",
+    "jsonwebtoken": "^7.1.7",
+    "morgan": "^1.7.0",
+    "request": "^2.74.0"
+  }
+}
