@@ -1,4 +1,4 @@
-## A tournament bracket app
+## A tournament bracket app built with NodeJS(express), AngularJS 2 and Cassandra
 The project name is an homage to the tournament that set in motion the events of Game of Thrones (http://awoiaf.westeros.org/index.php/Tourney_at_Harrenhal)
 
 [![CircleCI](https://img.shields.io/circleci/project/pinbar/tourney-at-harrenhal/master.svg)](https://circleci.com/gh/pinbar/tourney-at-harrenhal) [![Test Coverage](https://codeclimate.com/github/pinbar/tourney-at-harrenhal/badges/coverage.svg)](https://codeclimate.com/github/pinbar/tourney-at-harrenhal/coverage) [![Code Climate](https://codeclimate.com/github/pinbar/tourney-at-harrenhal/badges/gpa.svg)](https://codeclimate.com/github/pinbar/tourney-at-harrenhal) [![Issue Count](https://codeclimate.com/github/pinbar/tourney-at-harrenhal/badges/issue_count.svg)](https://codeclimate.com/github/pinbar/tourney-at-harrenhal)
@@ -20,9 +20,10 @@ The project name is an homage to the tournament that set in motion the events of
 * in the project directory, run `node index.js`
 * launch the browser and point to the baseurl `localhost:8081` (port can be changed in `config.js`)
 * *optional:*
-    * use **nodemon** to monitor for changes in your nodejs app and automatically restart the server
-    * if you don't have nodemon, install it globally `npm install -g nodemon`
-    * in the project directory run `nodemon`
+    * use **pm2** to manage your node app (if you don't have pm2, install it globally `npm install -g pm2`)
+    * it can monitor for changes in your nodejs app and automatically restart the server (`pm2 start index.js --watch`)
+    * it can also run the app in cluster mode (`pm2 index.js -i max`)
+    * https://github.com/Unitech/pm2
 
 ### running tests
 * tests are in the `spec` directory, which includes both `unit` and `integration` tests
