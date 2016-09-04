@@ -9,7 +9,6 @@ var jwtFortyrion;
 describe("Secure API tests", function() {
 
     beforeAll(function() {
-        app.start();
         //get token for jon
         request.post({url: authUrl, form: {name:"jon", password:"I know nothing", house:"stark"}}, function(error, response, body){
             jwtForjon = body.replace("JWT: ", "");
@@ -70,7 +69,4 @@ describe("Secure API tests", function() {
         });
     });
 
-    afterAll(function() {
-        app.stop();
-    });
 });

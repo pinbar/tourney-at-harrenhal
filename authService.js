@@ -1,24 +1,28 @@
+const cassandra = require('cassandra-driver');
+var client = new cassandra.Client({ contactPoints: ['127.0.0.1'], keyspace: 'tourney' });
+
 module.exports = {
-    //ideally this will be a service/DB call
-    authenticate: function(name, password) {
-        if(name && password) {
-            if(name === "jon") {
-                if(password === "I know nothing") {
-                    return true;
+    authenticate: function (name, password, callback) {
+        const query = 'SELECT * FROM users WHERE name=? AND password=? ALLOW FILTERING';
+        var isValid = false;
+        if (name && password) {
+            client.execute(query, [name, password], function (err, result) {
+                if (err) {
+                    console.log("error during authentication: " + err);
+                    isValid = false;
                 } else {
-                    return false;
+                    if (result.rows.length > 0) {
+                        console.log('Found a valid name password combination!');
+                        isValid = true;
+                    } else {
+                        isValid = false;
+                    }
                 }
-            } else if(name === "tyrion") {
-                if(password === "I know things") {
-                    return true;
-                } else {
-                    return false;
-                }
-            } else {
-                return false;
-            }
+                callback(isValid);
+            });
         } else {
-            return false;
+            isValid = false;
+            callback(isValid);
         }
     }
 }

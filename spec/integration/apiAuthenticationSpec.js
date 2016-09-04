@@ -5,10 +5,6 @@ var baseUrl = "http://localhost:" + config.serverPort + "/authenticate";
 
 describe("API Authentication tests", function() {
 
-    beforeAll(function() {
-        app.start();
-    });
-
     it("POST returns 200 for valid username password for jon", function(done){
         request.post({url: baseUrl, form: {name:"jon", password:"I know nothing"}}, function(error, response, body){
             expect(response.statusCode).toBe(200);
@@ -66,8 +62,5 @@ describe("API Authentication tests", function() {
         });
     });
 
-    afterAll(function() {
-        app.stop();
-    });
 });
 
