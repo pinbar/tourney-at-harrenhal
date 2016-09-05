@@ -16,7 +16,7 @@ var urlEncodedParser = bodyParser.urlencoded({ extended: false });
 app.use(express.static("static"));
 
 //load logger after static to ignore static logging
-app.use(morgan("dev"));
+app.use(morgan("dev", { "stream": logger.stream }));
 
 app.get("/", function (request, response) {
     response.send("Welcome to the Tourney at Harrenhal!");
@@ -44,7 +44,7 @@ app.post("/authenticate", urlEncodedParser, function (request, response) {
                 });
                 response.send("JWT: " + token);
             } else {
-                return response.status(401).end("Wrong credentials");
+                return response.status(401).send("Wrong credentials");
             }
         });
     }

@@ -6,7 +6,7 @@ The project name is an homage to the tournament that set in motion the events of
 ### tech stack
 * **nodejs** - javascript runtime built on v8 engine
 * **express** - minimalistic web api framework for nodejs
-* **cassandra** - nosql database
+* **cassandra** - a non-relational database that has high availability and linear scalability
 * **cassandra-driver** - for connecting to cassandra
 * **body-parser** - middleware for body parsing
 * **winston** - async logger for nodejs
@@ -18,10 +18,18 @@ The project name is an homage to the tournament that set in motion the events of
 * **istanbul** - module for test instrumentation and coverage
 * **request** - module for testing end-points
 
+### prerequisites
+* Node and NPM (verify with `node -v` and `npm -v`)
+* Apache Cassandra
+    * cassandra depends on java8 (verify with `java --version`)
+
 ### getting started
 * clone repo and `npm install`
+* set up database
+    * start cassandra
+    * create keyspace, table and data (see `/spec/helpers/testData.cql` for reference)
 * in the project directory, run `node index.js`
-* launch the browser and point to the baseurl `localhost:8081` (port can be changed in `config.js`)
+* launch the browser and point to `localhost:8081` (port can be changed in `config.js`)
 * *optional:*
     * use **pm2** to manage your node app (if you don't have pm2, install it globally `npm install -g pm2`)
     * it can monitor for changes in your nodejs app and automatically restart the server (`pm2 start index.js --watch`)
@@ -29,12 +37,13 @@ The project name is an homage to the tournament that set in motion the events of
     * https://github.com/Unitech/pm2
 
 ### running tests
-* tests are in the `spec` directory, which includes both `unit` and `integration` tests
+* tests are in the `spec` directory
+* `integration` tests automatically setup data and start the server before making api calls
 * to run all the tests, run `npm test` in the project directory
 * to run a single test, mark it with `fit` (use `fdescribe` to include the entire spec)
 * to exclude a test, mark it with `xit` (use `xdescribe` to exclude the entire spec)
 * **test coverage:** 
-    * to run instrumented code and generage coverage reports, run `npm run test-with-coverage`
+    * to run instrumented code and generate coverage reports, run `npm run test-with-coverage`
     * coverage reports are in `reports/coverage` directory (can be configured in `.istanbul.yml`)
 * **reporter** runs a jasmine helper to produce JUnit formatted test results in `reports/junit`
 
