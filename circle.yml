@@ -6,6 +6,10 @@ machine:
 test:
   override:
     - npm run test-with-coverage
+    - npm run start-node-server
+    - npm run test-load-run
+    - npm run test-load-report
+    - npm stop-node-server
   post:
     - npm install -g codeclimate-test-reporter
     - CODECLIMATE_REPO_TOKEN=$CodeClimateToken codeclimate-test-reporter < reports/coverage/lcov.info  
@@ -13,9 +17,5 @@ test:
     - mv reports/junit/** $CIRCLE_TEST_REPORTS/jasmine
     - mkdir $CIRCLE_ARTIFACTS/coverage
     - mv reports/coverage/lcov-report/** $CIRCLE_ARTIFACTS/coverage
-    - npm start-node-server
-    - npm run test-load-run
-    - npm run test-load-report
-    - npm stop-node-server
     - mkdir $CIRCLE_ARTIFACTS/artilleryReport
     - mv artilleryResults.json.html $CIRCLE_ARTIFACTS/artilleryReport
