@@ -48,8 +48,8 @@ The project name is an homage to the tournament that set in motion the events of
     * coverage reports are in `reports/coverage` directory (can be configured in `.istanbul.yml`)
 * **reporter** runs a jasmine helper to produce JUnit formatted test results in `reports/junit`
 * **load test** run artillery load tests:
-    * ensure that the server is running (`node index.js`)
-    * run the load test and generate report `npm run test-load-run && npm run test-load-report`
+    * start the server/app
+    * run the load test and generate report `npm run load-test-run && npm run load-test-report`
 
 ### api and authentication scenarios
 * all `/api/*` calls are secured with JWT authentication

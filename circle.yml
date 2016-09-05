@@ -4,14 +4,16 @@ machine:
   services:
     - cassandra
 test:
+  pre:
+    - npm install -g pm2
+    - npm install -g codeclimate-test-reporter
   override:
     - npm run test-with-coverage
-    - npm run start-node-server
-    - npm run test-load-run
-    - npm run test-load-report
-    - npm stop-node-server
+    - pm2 start index.js
+    - npm run load-test-run
+    - npm run load-test-report
+    - pm2 delete index.js
   post:
-    - npm install -g codeclimate-test-reporter
     - CODECLIMATE_REPO_TOKEN=$CodeClimateToken codeclimate-test-reporter < reports/coverage/lcov.info  
     - mkdir $CIRCLE_TEST_REPORTS/jasmine
     - mv reports/junit/** $CIRCLE_TEST_REPORTS/jasmine

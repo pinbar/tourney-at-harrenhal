@@ -4,12 +4,10 @@
   "description": "A tournament bracket app",
   "main": "index.js",
   "scripts": {
-    "start-node-server": "node index.js",
-    "stop-node-server": "killall node",
     "test": "jasmine",
     "test-with-coverage": "istanbul cover jasmine",
-    "test-load-run": "artillery quick -q --duration 15 --rate 5 -n 5 -o artilleryResults http://localhost:8081/harrenhal",
-    "test-load-report": "artillery report artilleryResults.json"
+    "load-test-run": "artillery quick -q --duration 15 --rate 5 -n 5 -o artilleryResults http://localhost:8081/harrenhal",
+    "load-test-report": "artillery report artilleryResults.json"
   },
   "author": "pinbar",
   "license": "ISC",
