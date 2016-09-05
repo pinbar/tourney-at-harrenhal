@@ -17,6 +17,7 @@ The project name is an homage to the tournament that set in motion the events of
 * **jasmine-reporters** - test result reporters (using JUnit reporter for CircleCI)
 * **istanbul** - module for test instrumentation and coverage
 * **request** - module for testing end-points
+* **artillery** - load testing framework for nodejs
 
 ### prerequisites
 * Node and NPM (verify with `node -v` and `npm -v`)
@@ -46,6 +47,9 @@ The project name is an homage to the tournament that set in motion the events of
     * to run instrumented code and generate coverage reports, run `npm run test-with-coverage`
     * coverage reports are in `reports/coverage` directory (can be configured in `.istanbul.yml`)
 * **reporter** runs a jasmine helper to produce JUnit formatted test results in `reports/junit`
+* **load test** run artillery load tests:
+    * ensure that the server is running (`node index.js`)
+    * run the load test and generate report `npm run test-load-run && npm run test-load-report`
 
 ### api and authentication scenarios
 * all `/api/*` calls are secured with JWT authentication

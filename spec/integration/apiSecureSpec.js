@@ -8,14 +8,16 @@ var jwtFortyrion;
 
 describe("Secure API tests", function() {
 
-    beforeAll(function() {
+    beforeAll(function(done) {
         //get token for jon
         request.post({url: authUrl, form: {name:"jon", password:"I know nothing", house:"stark"}}, function(error, response, body){
             jwtForjon = body.replace("JWT: ", "");
+            done();
         });
         //get token for tyrion
         request.post({url: authUrl, form: {name:"tyrion", password:"I know things", house:"lannister"}}, function(error, response, body){
             jwtFortyrion = body.replace("JWT: ", "");
+            done();
         });
     });
 
