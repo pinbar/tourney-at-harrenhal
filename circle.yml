@@ -11,7 +11,7 @@ test:
     - npm run test-with-coverage
     - pm2 start index.js
     - npm run load-test-run
-    - npm run load-test-report
+    #- npm run load-test-report
     - pm2 delete index.js
   post:
     - CODECLIMATE_REPO_TOKEN=$CodeClimateToken codeclimate-test-reporter < reports/coverage/lcov.info  
@@ -20,4 +20,4 @@ test:
     - mkdir $CIRCLE_ARTIFACTS/coverage
     - mv reports/coverage/lcov-report/** $CIRCLE_ARTIFACTS/coverage
     - mkdir $CIRCLE_ARTIFACTS/artilleryReport
-    - mv artilleryResults.json.html $CIRCLE_ARTIFACTS/artilleryReport
+    - mv artilleryResults.json $CIRCLE_ARTIFACTS/artilleryReport
