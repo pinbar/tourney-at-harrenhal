@@ -1,4 +1,6 @@
-const cassandra = require('cassandra-driver');
+var logger = require("./logger");
+var cassandra = require('cassandra-driver');
+
 var client = new cassandra.Client({ contactPoints: ['127.0.0.1'], keyspace: 'tourney' });
 
 module.exports = {
@@ -8,11 +10,11 @@ module.exports = {
         if (name && password) {
             client.execute(query, [name, password], function (err, result) {
                 if (err) {
-                    console.log("error during authentication: " + err);
+                    logger.error("error during authentication: " + err);
                     isValid = false;
                 } else {
                     if (result.rows.length > 0) {
-                        console.log('Found a valid name password combination!');
+                        logger.info('Found a valid name password combination!');
                         isValid = true;
                     } else {
                         isValid = false;

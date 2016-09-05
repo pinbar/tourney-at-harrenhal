@@ -20,8 +20,7 @@ reports/
 .node_repl_history
 
 # Logs
-logs
-
+log/
 *.log
 npm-debug.log*
 

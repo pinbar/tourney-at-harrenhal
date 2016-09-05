@@ -1,5 +1,6 @@
-const app = require("../../app");
-const cassandra = require('cassandra-driver');
+var app = require("../../app");
+var logger = require("../../logger");
+var cassandra = require('cassandra-driver');
 
 //start server before any integration test runs
 beforeAll(function (done) {
@@ -14,22 +15,22 @@ afterAll(function () {
 });
 
 function setupData(done) {
-  console.log('**** setting up data in cassandra ****')
+  logger.info('**** setting up data in cassandra ****')
   var client = new cassandra.Client({ contactPoints: ['127.0.0.1'] });
   var queryCreateKeyspace = 'CREATE KEYSPACE IF NOT EXISTS tourney WITH replication = {\'class\': \'SimpleStrategy\', \'replication_factor\' : 3}';
   client.execute(queryCreateKeyspace, function (err, result) {
     if (err) {
-      console.log('Error during data setup: ' + err);
+      logger.error('Error during data setup: ' + err);
     } else {
       var queryUseKeyspace = 'USE tourney';
       client.execute(queryUseKeyspace, function (err, result) {
         if (err) {
-          console.log('Error during data setup: ' + err);
+          logger.error('Error during data setup: ' + err);
         } else {
           var queryCreateTable = 'CREATE TABLE IF NOT EXISTS users (name text PRIMARY KEY, password text, house text)';
           client.execute(queryCreateTable, function (err, result) {
             if (err) {
-              console.log('Error during data setup: ' + err);
+              logger.error('Error during data setup: ' + err);
             } else {
               var queryInsertJonUser = 'INSERT INTO users (name,password,house) VALUES (\'jon\',\'I know nothing\', \'stark\')';
               var queryInsertTyrionUser = 'INSERT INTO users (name,password,house) VALUES (\'tyrion\',\'I know things\', \'lannister\')';
@@ -37,9 +38,9 @@ function setupData(done) {
               var queries = [{query: queryInsertJonUser}, {query: queryInsertTyrionUser}, {query: queryInsertDanyUser}]
               client.batch(queries, { prepare: true }, function (err) {
                 if (err) {
-                  console.log('Error during data setup: ' + err);
+                  logger.error('Error during data setup: ' + err);
                 } else {
-                  console.log('**** done setting up data in cassandra *****');
+                  logger.info('**** done setting up data in cassandra *****');
                   done();
                 }
               });
@@ -52,12 +53,12 @@ function setupData(done) {
 }
 
 // function setupData() {
-//   console.log('**** setting up data in cassandra ****')
+//   logger.log('**** setting up data in cassandra ****')
 //   var client = new cassandra.Client({ contactPoints: ['127.0.0.1']});
 //   var source = 'SOURCE \'testData.cql\'';
 //   client.execute(source, function(err, result){
 //     if(err) {
-//       console.log("Error during data setup: " + err);
+//       logger.log("Error during data setup: " + err);
 //     }
 //   });
 // }  

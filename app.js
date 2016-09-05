@@ -3,6 +3,7 @@ var morgan = require("morgan");
 var bodyParser = require("body-parser");
 var jsonwebtoken = require("jsonwebtoken");
 var config = require("./config");
+var logger = require("./logger");
 var authService = require("./authService");
 var cryptoUtil = require("./cryptoUtil");
 
@@ -56,7 +57,7 @@ apiRouter.use(function (request, response, next) {
         token = token.replace("Bearer ", "");
         jsonwebtoken.verify(token.trim(), config.jwtSecret, function (error, decoded) {
             if (error) {
-                console.log("jwt error: " + error);
+                logger.error("jwt error: " + error);
                 response.status(401).send("Invalid Token. Error Message: " + error);
             } else {
                 request.decodedToken = decoded;
@@ -95,12 +96,12 @@ var server;
 module.exports = {
     start: function () {
         server = app.listen(config.serverPort, function () {
-            console.log("app started");
+            logger.info("app started");
         });
     },
     stop: function () {
         server.close(function () {
-            console.log("app stopped");
+            logger.info("app stopped");
         });
     }
 }

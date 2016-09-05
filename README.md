@@ -6,7 +6,10 @@ The project name is an homage to the tournament that set in motion the events of
 ### tech stack
 * **nodejs** - javascript runtime built on v8 engine
 * **express** - minimalistic web api framework for nodejs
+* **cassandra** - nosql database
+* **cassandra-driver** - for connecting to cassandra
 * **body-parser** - middleware for body parsing
+* **winston** - async logger for nodejs
 * **morgan** - middleware for http request/response logging
 * **jsonwebtoken** - jwt implementation for nodejs
 * **crypto** - cryptography module for nodejs
@@ -38,7 +41,7 @@ The project name is an homage to the tournament that set in motion the events of
 ### api and authentication scenarios
 * all `/api/*` calls are secured with JWT authentication
 * obtain a JWT token here `POST /authenticate.html`
-    * enter name:password (jon:I know nothing or tyrion:I know things)
+    * enter name:password (example: jon:I know nothing)
     * the response contains a JWT token for that user
 * use the token when calling any secure api (`/api/*`):
     * set the `Authorization` request header and add the jwt token, like so:
