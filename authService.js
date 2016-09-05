@@ -22,9 +22,6 @@ module.exports = {
                 }
                 callback(isValid);
             });
-        } else {
-            isValid = false;
-            callback(isValid);
         }
     }
 }
