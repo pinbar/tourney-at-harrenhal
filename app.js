@@ -5,6 +5,7 @@ var jsonwebtoken = require("jsonwebtoken");
 var config = require("./config");
 var logger = require("./logger");
 var authService = require("./authService");
+var userService = require("./userService");
 var cryptoUtil = require("./cryptoUtil");
 
 var app = express();
@@ -19,17 +20,36 @@ app.use(express.static("static"));
 app.use(morgan("dev", { "stream": logger.stream }));
 
 app.get("/", function (request, response) {
+    response.redirect("/api/");
+});
+
+app.get("/api/", function (request, response) {
     response.send("Welcome to the Tourney at Harrenhal!");
 });
 
-app.get("/harrenhal", function (request, response) {
+app.get("/api/users", function (request, response) {
+    userService.getUsers(function (error, results) {
+        if (error) {
+            logger.log("sending results: " + results);
+            return response.status(500).send("An unexpected error occurred!");
+        } else if (results.size < 1) {
+            return response.status(404).send("Users not found!");
+        } else {
+            logger.log("sending results: " + results);
+            response.status(200).send(results);
+        }
+    });
+});
+
+app.get("/api/harrenhal", function (request, response) {
     response.status(200).send("This castle is not secured, anyone can just walk in!");
 });
 
-app.post("/authenticate", urlEncodedParser, function (request, response) {
+app.post("/api/authenticate", jsonParse, function (request, response) {
     var name = request.body.name;
     var password = request.body.password;
     var house = request.body.house;
+    console.log(request.body);
     if (!name || !password) {
         response.status(400).send("Bad request");
     } else {
@@ -50,8 +70,8 @@ app.post("/authenticate", urlEncodedParser, function (request, response) {
     }
 });
 
-var apiRouter = express.Router();
-apiRouter.use(function (request, response, next) {
+var secureRouter = express.Router();
+secureRouter.use(function (request, response, next) {
     var token = request.get("Authorization");
     if (token && token.includes("Bearer")) {
         token = token.replace("Bearer ", "");
@@ -68,14 +88,14 @@ apiRouter.use(function (request, response, next) {
         response.status(401).send("No access token found");
     }
 });
-//any routes that use apiRouter will be protected
-app.use("/api", apiRouter);
+//any routes that use secureRouter will be protected
+app.use("/api/secure", secureRouter);
 
-apiRouter.get("/castleblack", function (request, response) {
+secureRouter.get("/castleblack", function (request, response) {
     response.send("Welcome to Castle Black!");
 });
 
-apiRouter.get("/winterfell", function (request, response) {
+secureRouter.get("/winterfell", function (request, response) {
     var encryptedHouse = request.decodedToken.house;
     var house = cryptoUtil.decrypt(encryptedHouse);
     var encryptedName = request.decodedToken.name;

@@ -1,17 +1,45 @@
 <html>
+    <head>
+        <script src="jquery-3.1.1.min.js"></script>
+    </head>
 <body>
-<form action="authenticate" method="POST">
-<div style="color:red">Authenticate to make secure api calls!</div>
+    <script>
+            function authenticate(){
+                console.log("posting form ..");
+                rawData = {
+                        name:document.getElementById('name').value,
+                        password:document.getElementById('password').value,
+                        house:document.getElementById('house').value
+                };
+                $.ajax({
+                    url: "api/authenticate",
+                    method: "POST",
+                    contentType : "application/json; charset=utf-8",
+                    data: JSON.stringify(rawData),
+                    success: function(result) {
+                        console.log("form posted successfully");
+                        $('#errorMsg').text(result);
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.log("error occurred during form post: " + errorThrown);
+                        $('#errorMsg').text(errorThrown);
+                    }
+                });
+            }
+        </script>
+
+<div style="color:green">Authenticate to make secure api calls!</div>
 <br>
 <div style="color:blue">
-Name: <input type="text" name="name">  
+Name: <input type="text" name="name" id="name">  
 <br>
-Password: <input type="text" name="password">
+Password: <input type="text" name="password" id="password">
 <br>
-House: <input type="text" name="house">
+House: <input type="text" name="house" id="house">
 </div>
 <br>
-<input type="submit" value="Get Auth Token" style="background-color:yellow">
-</form>
+<input type="button" value="Get Auth Token" style="background-color:yellow" onclick="authenticate()">
+<p><div id="errorMsg" style="color:red"></div></p>
+
 </body>
 </html>

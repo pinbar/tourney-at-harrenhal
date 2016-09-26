@@ -1,8 +1,8 @@
 var app = require("../../app");
 var request = require("request");
 var config = require("../../config");
-var baseUrl = "http://localhost:" + config.serverPort + "/api";
-var authUrl = "http://localhost:" + config.serverPort + "/authenticate";
+var baseUrl = "http://localhost:" + config.serverPort + "/api/secure";
+var authUrl = "http://localhost:" + config.serverPort + "/api/authenticate";
 var jwtForjon;
 var jwtFortyrion;
 
@@ -10,12 +10,12 @@ describe("Secure API tests", function() {
 
     beforeAll(function(done) {
         //get token for jon
-        request.post({url: authUrl, form: {name:"jon", password:"I know nothing", house:"stark"}}, function(error, response, body){
+        request.post({url: authUrl, json: {name:"jon", password:"I know nothing", house:"stark"}}, function(error, response, body){
             jwtForjon = body.replace("JWT: ", "");
             done();
         });
         //get token for tyrion
-        request.post({url: authUrl, form: {name:"tyrion", password:"I know things", house:"lannister"}}, function(error, response, body){
+        request.post({url: authUrl, json: {name:"tyrion", password:"I know things", house:"lannister"}}, function(error, response, body){
             jwtFortyrion = body.replace("JWT: ", "");
             done();
         });

@@ -17,6 +17,7 @@ module.exports = {
                         logger.info('Found a valid name password combination!');
                         isValid = true;
                     } else {
+                        logger.info('Valid name password combination not found!');
                         isValid = false;
                     }
                 }
