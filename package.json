@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jasmine",
     "test-with-coverage": "istanbul cover jasmine",
-    "load-test-run": "artillery quick --duration 15 --rate 5 -n 5 -o artilleryResults http://localhost:8081/api/harrenhal",
+    "load-test-run": "artillery quick --duration 15 --rate 5 -n 5 -o artilleryResults.json http://localhost:8081/api/harrenhal",
     "load-test-report": "artillery report artilleryResults.json -o artilleryReport.html"
   },
   "author": "pinbar",
