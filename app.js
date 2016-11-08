@@ -31,9 +31,9 @@ app.get("/api/users", function (request, response) {
     userService.getUsers(function (error, results) {
         if (error) {
             logger.log("sending results: " + results);
-            return response.status(500).send("An unexpected error occurred!");
+            return sendErrorResponse(response, 500, "An unexpected error occurred!");
         } else if (results.size < 1) {
-            return response.status(404).send("Users not found!");
+            return sendErrorResponse(response, 404, "No user found!");
         } else {
             logger.log("sending results: " + results);
             response.status(200).send(results);
@@ -109,8 +109,12 @@ secureRouter.get("/winterfell", function (request, response) {
 
 //default fallthrough handler
 app.use(function (req, res) {
-    res.status(404).send("Resource Not Found");
+    sendErrorResponse(res, 404, "Resource Not Found");
 });
+
+function sendErrorResponse(res, status, message) {
+    res.status(status).json({status: status, message: message});
+}
 
 var server;
 module.exports = {
